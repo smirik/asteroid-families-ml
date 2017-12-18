@@ -1,10 +1,20 @@
-import pandas as pd
-import numpy as np
-from sklearn.neighbors import KNeighborsClassifier as knc
-from sklearn.ensemble import GradientBoostingClassifier as gbc
-from sklearn.metrics import recall_score as rs, precision_score as ps, accuracy_score as acs
-from sklearn.metrics import confusion_matrix as cm
 from datetime import datetime as dt
+
+import numpy as np
+import pandas as pd
+
+import algorithm
+import sourcelib
+from methods import *
+
+
+def main():
+    sourcelib.check_source()
+
+
+#==============================================================================================
+# WORK IN PROGRESS
+
 
 ##def ro(x,y, k1=1.25, k2=2.0, k3=2.0):
     ##return (x[1]+y[1])*(x[4]+y[4])/4.0*np.sqrt(
@@ -16,9 +26,8 @@ def ro(x,y, k1=1.25, k2=2.0, k3=2.0):
         4.0*k1*((x[0]-y[0])/(x[0]+y[0]))**2+
         k2*(x[1]-y[1])**2+k3*(x[2]-y[2])**2)
 
-#==============================================================================================
 
-def process(f=None, train_sample=10000,t1=0,t2=9999,out=False,
+def process(f=None, train_sample=10000,t1=0,t2=9999,out=False,dumpout = dump_out,
             inp='data.csv',feats=['a','e','i'], alg=knc(n_neighbors=5,metric="minkowski",p=2,n_jobs=6),negative=0,verbose=1):
     '''
     f - family number
@@ -41,14 +50,16 @@ def process(f=None, train_sample=10000,t1=0,t2=9999,out=False,
     ytrain = np.array([1 if int(i)==f else negative for i in data_train.fam])
 
     if verbose >= 1:
-        print('Start time: ',dt.now(),"\n")
+        now1 = dt.now()
+        print('Start time: ',now1,"\n")
 
     cl = alg
     cl.fit(xtrain,ytrain)
     i2=t1
     yallnew=np.array([])
     if out:
-        fi=open('dump'+str(f)+'_minkow.txt','w')
+        dumpout.insert(1,str(f))
+        fi=open(''.join(dumpout),'w')
     while True:
         i1=i2
         i2=min((i1+10000,t2+1))
@@ -90,7 +101,10 @@ def process(f=None, train_sample=10000,t1=0,t2=9999,out=False,
         print('Total precision: ',psa,', recall: ',rsa,
             ', accuracy: ',acsa)
         print(cm(yall[t1:t2+1],yallnew))
-        print('Finish time: ',dt.now(),"\n")
+        now2 = dt.now()
+        print('Finish time: ',now2,"\n")
+        print('Finish time: ',(now2-now1).total_seconds(),"\n")
+        
     print('Done.')
 
     return (psa,rsa,acsa,cma)
@@ -98,7 +112,7 @@ def process(f=None, train_sample=10000,t1=0,t2=9999,out=False,
 #==============================================================================================
 
 def custom_process(first=None,n=None,out='KNN_families_statistics.csv',alg=knc,n_samples=10,
-    varp={'n_neighbors':[5],'metric':['minkowski'],'p':[2],'n_jobs':[6]}):
+    varp={'n_neighbors':[3,5,7,9,11],'metric':['minkowski'],'p':[1,2,3,4,5],'n_jobs':[6]}):
     
     l = [2,3,4,5,10,15,20,24,25,31,87,93,96,
         110,135,145,148,153,158,159,163,170,179,194,
