@@ -131,7 +131,7 @@ def process(data, family = None, features = ['a', 'e', 'sinI'], algorithm = None
     return total_precision, total_recall, total_accuracy, total_cmatrix
 
 
-def custom_process(data, first = None, last = None, algorithm = None, varp = None, n_samples = 10, dump_out = True, verbose = 1):
+def custom_process(data, first = None, last = None, algorithm = None, varp = None, n_samples = 1, dump_out = True, verbose = 1):
 
     def _multiset(d):
         '''Yields cartesian product elements from a dictionary containing sets of variable parameters'''

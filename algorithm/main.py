@@ -1,5 +1,3 @@
-import imp
-
 import pandas as pd
 
 from methods import *
@@ -8,11 +6,11 @@ import sourcelib
 try:
     import config
 except Exception:
-    raise SystemExit('Wrong configuration file format. Terminating the program.')
+    raise SystemExit('Wrong configuration file format (please check your configuration using config_sample as an example). Terminating the program.')
 
 
 if config.ALG not in ALLOWED_METHODS:
-    raise SystemExit('Wrong method specified in the config file. Terminating the program.')
+    raise SystemExit('Wrong method specified in the config file (please check your configuration using config_sample as an example). Terminating the program.')
 
 # Ensuring that the source data is available
 sourcelib.check_source()
@@ -25,12 +23,12 @@ for key, item in config.VAR_PARAMS.items():
         config.VAR_PARAMS[key] = [config.VAR_PARAMS[key]]
 
 config_args = (config.FIRST_FAMILY,
-                     config.LAST_FAMILY,
-                     config.ALG,
-                     config.VAR_PARAMS,
-                     )
+               config.LAST_FAMILY,
+               config.ALG,
+               config.VAR_PARAMS)
 
-config_kwargs = {'verbose': config.VERBOSE}
+config_kwargs = {'verbose': config.VERBOSE,
+                 'n_samples': config.N_SAMPLES}
 
 # Get results
 processlib.custom_process(data, *config_args, **config_kwargs)
