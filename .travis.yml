@@ -1,0 +1,19 @@
+language: python
+python: 3.6
+sudo: false
+#cache: pip
+
+os:
+  - linux
+
+before_install:
+  - echo "Before-install field"
+
+install:
+  - echo "Install field"
+
+script:
+  - echo "Tests should appear in the near future"
+
+after_success:
+  - echo "After-success output"
