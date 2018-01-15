@@ -1,3 +1,6 @@
+* master: [![Build Status](https://travis-ci.org/4xxi/asteroid-families-ml.svg?branch=feature%2Ftravis)](https://travis-ci.org/4xxi/asteroid-families-ml)
+* develop: [![Build Status](https://travis-ci.org/4xxi/asteroid-families-ml.svg?branch=develop)](https://travis-ci.org/4xxi/asteroid-families-ml)
+
 # Asteroid families ML
 
 ## Abstract
